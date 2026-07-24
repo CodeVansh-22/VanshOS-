@@ -36,6 +36,7 @@ def create_app():
     allowed_origins = list(set([
         frontend_url.rstrip("/"),
         "https://vanshos.vercel.app",
+        "https://vansh-os-eight.vercel.app",
         "http://localhost:3000",
         "http://127.0.0.1:3000"
     ]))

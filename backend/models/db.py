@@ -1,5 +1,7 @@
 import os
+import certifi
 from pymongo import MongoClient
+from pymongo.uri_parser import parse_uri
 from bson.objectid import ObjectId
 import datetime
 
@@ -11,12 +13,18 @@ class DatabaseManager:
     def init_app(self, app):
         mongo_uri = app.config.get("MONGO_URI", "mongodb://localhost:27017/vanshos_db")
         try:
-            # 5 seconds timeout for Atlas cloud connection
-            self.client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+            client_options = {
+                "serverSelectionTimeoutMS": 5000,
+                "tlsCAFile": certifi.where(),
+            }
+
+            if mongo_uri.startswith("mongodb+srv://") or "mongodb.net" in mongo_uri:
+                client_options["tls"] = True
+
+            self.client = MongoClient(mongo_uri, **client_options)
             self.client.admin.command('ping')
-            db_name = mongo_uri.split("/")[-1].split("?")[0] or "vanshos_db"
-            if db_name.startswith("?"):
-                db_name = "vanshos_db"
+            parsed_uri = parse_uri(mongo_uri)
+            db_name = parsed_uri.get("database") or "vanshos_db"
             self.db = self.client[db_name]
             print(f"[*] MongoDB Atlas Connected Successfully to DB: {db_name}")
         except Exception as e:
