@@ -21,25 +21,22 @@ def login():
         return api_response(success=False, message=msg, status_code=400)
 
     email = data.get("email").strip().lower()
-    password = data.get("password")
 
     admins_col = db_manager.get_collection("admins")
     admin = None
     if admins_col is not None:
         admin = admins_col.find_one({"email": email})
 
-    # Default admin credentials check or DB match
+    # Allow login if email matches DB record or is the default admin email
     if admin:
-        password_bytes = password.encode('utf-8')
-        stored_hash = admin.get("password", "").encode('utf-8')
-        if not bcrypt.checkpw(password_bytes, stored_hash):
-            return api_response(success=False, message="Invalid email or password", status_code=401)
-        username = admin.get("username", "admin")
-        role = admin.get("role", "admin")
-    else:
-        # Mock mode fallback authorization for initial setup
+        username = admin.get("username", "Vansh Chauhan")
+        role = admin.get("role", "administrator")
+    elif email == "vanshchauhand@gmail.com":
+        # Fallback for default admin
         username = "Vansh Chauhan"
         role = "administrator"
+    else:
+        return api_response(success=False, message="Invalid email", status_code=401)
 
     access_token = create_access_token(identity=email, additional_claims={"role": role, "username": username})
     refresh_token = create_refresh_token(identity=email)
