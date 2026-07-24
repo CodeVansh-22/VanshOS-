@@ -16,27 +16,14 @@ auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 @auth_bp.route("/login", methods=["POST"])
 def login():
     data = request.get_json() or {}
-    valid, msg = validate_required_fields(data, ["email", "password"])
-    if not valid:
-        return api_response(success=False, message=msg, status_code=400)
+    email = (data.get("email") or "").strip().lower()
 
-    email = data.get("email").strip().lower()
+    if not email:
+        return api_response(success=False, message="Email is required", status_code=400)
 
-    admins_col = db_manager.get_collection("admins")
-    admin = None
-    if admins_col is not None:
-        admin = admins_col.find_one({"email": email})
-
-    # Allow login if email matches DB record or is the default admin email
-    if admin:
-        username = admin.get("username", "Vansh Chauhan")
-        role = admin.get("role", "administrator")
-    elif email == "vanshchauhand@gmail.com":
-        # Fallback for default admin
-        username = "Vansh Chauhan"
-        role = "administrator"
-    else:
-        return api_response(success=False, message="Invalid email", status_code=401)
+    # Direct admin access — no password, no DB check
+    username = "Vansh Chauhan"
+    role = "administrator"
 
     access_token = create_access_token(identity=email, additional_claims={"role": role, "username": username})
     refresh_token = create_refresh_token(identity=email)

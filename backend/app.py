@@ -88,22 +88,6 @@ def create_app():
             "db_status": "connected" if db_manager.db is not None else "mock_fallback"
         }
 
-    # Seed Initial Admin User if DB connected
-    with app.app_context():
-        try:
-            admins_col = db_manager.get_collection("admins")
-            if admins_col is not None and admins_col.count_documents({}) == 0:
-                hashed_pw = bcrypt.hashpw("admin123".encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-                admins_col.insert_one({
-                    "username": "Vansh Chauhan",
-                    "email": "vanshchauhand@gmail.com",
-                    "password": hashed_pw,
-                    "role": "administrator"
-                })
-                print("[*] Default admin seeded: vanshchauhand@gmail.com")
-        except Exception as e:
-            print(f"[!] Admin seeding skipped: {e}")
-
     return app
 
 app = create_app()
