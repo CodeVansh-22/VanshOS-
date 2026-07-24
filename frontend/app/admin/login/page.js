@@ -11,7 +11,7 @@ import { authService } from '@/services/api';
 export default function AdminLogin() {
   const router = useRouter();
   const [email, setEmail] = useState('vanshchauhand@gmail.com');
-  const [password, setPassword] = useState('admin123');
+  const password = 'access';
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -83,23 +83,7 @@ export default function AdminLogin() {
             </div>
           </div>
 
-          <div className="space-y-1">
-            <div className="flex justify-between items-center text-xs font-button">
-              <label className="uppercase tracking-wider text-luxuryGray">Password</label>
-              <span className="text-luxuryMuted hover:text-goldAccent cursor-pointer">JWT Secured</span>
-            </div>
-            <div className="relative">
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
-                className="w-full pl-11 pr-4 py-3.5 rounded-[16px] bg-[#121212] border border-white/10 text-luxuryWhite text-sm focus:outline-none focus:border-goldAccent font-body"
-              />
-              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-luxuryMuted w-4 h-4" />
-            </div>
-          </div>
+
 
           <MagneticButton
             type="submit"
@@ -117,13 +101,13 @@ export default function AdminLogin() {
           </MagneticButton>
         </form>
 
-        {/* Credentials hint */}
+        {/* Auth hint */}
         <div className="pt-4 border-t border-white/5 text-center text-xs font-button text-luxuryMuted space-y-1">
           <p className="text-emeraldAccent flex items-center justify-center space-x-1">
             <FiCheckCircle className="w-3.5 h-3.5" />
-            <span>MongoDB Atlas Authentication Active</span>
+            <span>Email Authentication Active</span>
           </p>
-          <p>Default: <span className="text-luxuryWhite font-semibold">vanshchauhand@gmail.com</span> / <span className="text-luxuryWhite font-semibold">admin123</span></p>
+          <p>Use admin email to access dashboard</p>
         </div>
 
         <div className="text-center pt-2">
