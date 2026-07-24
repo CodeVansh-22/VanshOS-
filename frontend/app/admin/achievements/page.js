@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiAward, FiPlus, FiUploadCloud, FiTrash2, FiX, FiCheck, FiEye } from 'react-icons/fi';
 import { achievementsService } from '@/services/api';
+import { getFileUrl } from '@/lib/utils';
 
 const initialAchievements = [];
 
@@ -279,13 +280,7 @@ export default function AdminAchievements() {
 
               <div className="w-full h-[600px] rounded-[16px] overflow-hidden bg-[#121212] border border-white/10">
                 <iframe
-                  src={
-                    previewPdfUrl && (previewPdfUrl.startsWith('http://') || previewPdfUrl.startsWith('https://'))
-                      ? previewPdfUrl
-                      : previewPdfUrl && previewPdfUrl.startsWith('/uploads/')
-                      ? `http://localhost:5000${previewPdfUrl}`
-                      : 'http://localhost:5000/api/resume/view'
-                  }
+                  src={getFileUrl(previewPdfUrl || '/api/resume/view')}
                   className="w-full h-full border-none"
                   title="Certificate Live Viewer"
                 />

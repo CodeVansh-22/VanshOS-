@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { FiFileText, FiUploadCloud, FiDownload, FiCheckCircle, FiRefreshCw, FiEye } from 'react-icons/fi';
 import MagneticButton from '@/components/ui/MagneticButton';
 import { resumeService } from '@/services/api';
+import { getFileUrl } from '@/lib/utils';
 
 export default function AdminResume() {
   const [downloadCount, setDownloadCount] = useState(142);
@@ -163,7 +164,7 @@ export default function AdminResume() {
 
             <div className="w-full h-[520px] rounded-[16px] overflow-hidden bg-[#121212] border border-white/10 relative">
               <iframe
-                src="http://localhost:5000/api/resume/view"
+                src={getFileUrl('/api/resume/view')}
                 className="w-full h-full border-none"
                 title="Resume PDF Preview"
               />

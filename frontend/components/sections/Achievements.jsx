@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiAward, FiStar, FiShield, FiEye } from 'react-icons/fi';
 import { achievementsService } from '@/services/api';
+import { getFileUrl } from '@/lib/utils';
 
 export default function Achievements() {
   const [achievements, setAchievements] = useState([]);
@@ -23,30 +24,22 @@ export default function Achievements() {
 
   return (
     <section id="achievements" className="py-24 relative z-10">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Heading */}
-        <div className="flex flex-col items-center text-center mb-16 space-y-3">
-          <motion.span
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="font-button text-xs font-semibold text-goldAccent uppercase tracking-widest px-4 py-1.5 rounded-full glass-card border border-goldAccent/30"
-          >
-            RECOGNITIONS & CERTIFICATIONS
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-heading text-4xl md:text-6xl text-luxuryWhite font-light"
-          >
-            Honors & <span className="gold-gradient-text">Achievements</span>
-          </motion.h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-goldAccent to-emeraldAccent rounded-full mt-2" />
+      <div className="max-w-7xl mx-auto px-6 space-y-12">
+
+        {/* Section Title */}
+        <div className="text-center space-y-3">
+          <span className="text-xs font-button uppercase tracking-widest text-goldAccent">
+            Honors & Credentials
+          </span>
+          <h2 className="font-heading text-4xl md:text-5xl text-luxuryWhite font-light">
+            Verified <span className="gold-gradient-text font-semibold">Achievements</span>
+          </h2>
+          <p className="font-body text-xs md:text-sm text-luxuryMuted max-w-xl mx-auto">
+            Industry certifications, academic excellence, and competitive coding milestones.
+          </p>
         </div>
 
-        {/* Content Container */}
+        {/* Grid or Empty state */}
         {isLoading ? (
           <div className="glass-card p-12 rounded-[24px] border border-white/5 animate-pulse text-center" />
         ) : achievements.length > 0 ? (
@@ -65,10 +58,11 @@ export default function Achievements() {
                   <button
                     onClick={() => {
                       const target = item.certificateUrl || item.fileName;
-                      if (target && (target.startsWith('http') || target.startsWith('/uploads'))) {
-                        window.open(target, '_blank');
+                      if (target) {
+                        window.open(getFileUrl(target), '_blank');
                       } else {
-                        window.open(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/resume/view`, '_blank');
+                        const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+                        window.open(`${apiBase}/resume/view`, '_blank');
                       }
                     }}
                     className="px-3 py-1.5 rounded-[10px] bg-goldAccent/10 text-goldAccent hover:bg-goldAccent/20 font-semibold transition-colors flex items-center space-x-1.5"
