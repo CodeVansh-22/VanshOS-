@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: vanshos-backend
+    env: python
+    region: singapore
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers 4 --threads 2"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: FLASK_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://vanshos.vercel.app
+      - key: UPLOAD_FOLDER
+        value: uploads
