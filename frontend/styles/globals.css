@@ -5,9 +5,14 @@
 @layer base {
   * {
     box-sizing: border-box;
-    scroll-behavior: smooth;
   }
   
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   html, body {
     background-color: #0B0B0B;
     color: #FAFAFA;
@@ -15,8 +20,10 @@
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    selection-background-color: #C9A227;
-    selection-color: #0B0B0B;
+    -webkit-overflow-scrolling: touch;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
@@ -86,3 +93,32 @@
   mask-composite: exclude;
   pointer-events: none;
 }
+
+/* Lenis Smooth Scroll Optimization */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Hardware GPU acceleration utilities for 60/120fps smooth animations */
+.gpu-layer {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+

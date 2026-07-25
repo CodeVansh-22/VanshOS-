@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import SmoothScroll from '@/components/ui/SmoothScroll';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
@@ -45,7 +46,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <SmoothScroll>
       <LoadingScreen onComplete={() => setLoadingFinished(true)} />
       
       <main className={`min-h-screen bg-[#0B0B0B] text-luxuryWhite transition-opacity duration-1000 ${loadingFinished ? 'opacity-100' : 'opacity-90'}`}>
@@ -61,6 +62,6 @@ export default function Home() {
         <SocialLinks />
         <Footer />
       </main>
-    </>
+    </SmoothScroll>
   );
 }
