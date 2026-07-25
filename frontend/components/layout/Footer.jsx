@@ -15,13 +15,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/5">
           
           {/* Brand Info */}
-          <div className="md:col-span-5 space-y-4">
+          <div className="md:col-span-7 space-y-4">
             <Link href="#home" className="inline-block">
               <span className="font-hero text-3xl font-bold tracking-tight text-luxuryWhite">
                 Vansh<span className="text-goldAccent">OS</span>
               </span>
             </Link>
-            <p className="font-body text-luxuryGray text-sm max-w-sm font-light leading-relaxed">
+            <p className="font-body text-luxuryGray text-sm max-w-md font-light leading-relaxed">
               Personal portfolio & digital suite of Vansh Sunil Chauhan. Engineered with precision, luxury aesthetics, and modern web standards.
             </p>
             <div className="pt-2 text-xs font-button text-luxuryMuted">
@@ -30,9 +30,9 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="md:col-span-3 space-y-3 font-button">
+          <div className="md:col-span-5 space-y-3 font-button">
             <h4 className="text-xs uppercase tracking-widest text-goldAccent font-semibold">Navigation</h4>
-            <ul className="space-y-2 text-sm text-luxuryGray">
+            <ul className="grid grid-cols-2 gap-2 text-sm text-luxuryGray">
               <li><a href="#home" className="hover:text-luxuryWhite transition-colors">Home</a></li>
               <li><a href="#about" className="hover:text-luxuryWhite transition-colors">About Me</a></li>
               <li><a href="#education" className="hover:text-luxuryWhite transition-colors">Academic History</a></li>
@@ -40,20 +40,6 @@ export default function Footer() {
               <li><a href="#projects" className="hover:text-luxuryWhite transition-colors">Selected Projects</a></li>
               <li><a href="#contact" className="hover:text-luxuryWhite transition-colors">Contact Direct</a></li>
             </ul>
-          </div>
-
-          {/* Admin & System */}
-          <div className="md:col-span-4 space-y-4 font-button">
-            <h4 className="text-xs uppercase tracking-widest text-emeraldAccent font-semibold">Admin Access</h4>
-            <p className="text-xs text-luxuryMuted">
-              Authorized administrators can log into the VanshOS control center to manage content and analytics.
-            </p>
-            <Link
-              href="/admin/login"
-              className="inline-flex items-center px-4 py-2 rounded-[16px] glass-card text-xs text-goldAccent hover:text-luxuryWhite border border-goldAccent/30 hover:border-goldAccent transition-all"
-            >
-              Control Center Login →
-            </Link>
           </div>
 
         </div>

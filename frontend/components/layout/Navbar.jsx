@@ -90,11 +90,8 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action: Resume Button & Admin Quick Link */}
+          {/* Right Action: Resume Button */}
           <div className="hidden lg:flex items-center space-x-4">
-            <a href="#contact" className="text-xs font-button text-luxuryMuted hover:text-luxuryGray transition-colors">
-              ADMIN LOGIN?
-            </a>
             <MagneticButton className="px-5 py-2.5 rounded-[24px] bg-gradient-to-r from-goldAccent to-[#DFB531] text-darkBg font-semibold text-xs uppercase tracking-wider hover:shadow-gold-glow transition-all">
               <a href="#contact" className="flex items-center space-x-2">
                 <FiFileText className="w-4 h-4" />
@@ -157,13 +154,6 @@ export default function Navbar() {
                   <FiFileText className="w-4 h-4" />
                   <span>Download Resume</span>
                 </a>
-                <Link
-                  href="/admin/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-center font-button text-xs text-luxuryMuted hover:text-goldAccent py-2"
-                >
-                  Access Admin Portal
-                </Link>
               </motion.div>
             </div>
           </motion.div>

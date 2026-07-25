@@ -5,33 +5,47 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoadingScreen({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const alreadyLoaded = sessionStorage.getItem('vanshos_loaded');
+      if (alreadyLoaded) return false;
+    }
+    return true;
+  });
 
   useEffect(() => {
+    if (!isLoading) {
+      if (onComplete) onComplete();
+      return;
+    }
+
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
           setTimeout(() => {
             setIsLoading(false);
+            if (typeof window !== 'undefined') {
+              sessionStorage.setItem('vanshos_loaded', 'true');
+            }
             if (onComplete) onComplete();
-          }, 400);
+          }, 100);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 15) + 5;
+        return prev + Math.floor(Math.random() * 20) + 15;
       });
-    }, 90);
+    }, 18);
 
     return () => clearInterval(timer);
-  }, [onComplete]);
+  }, [isLoading, onComplete]);
 
   return (
     <AnimatePresence>
       {isLoading && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, y: -40 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#0B0B0B] p-8 md:p-16 text-luxuryWhite select-none"
         >
           {/* Top subtle brand mark */}
